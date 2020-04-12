@@ -67,9 +67,9 @@ class Play extends Phaser.Scene {
         // game over flag
         this.gameOver = false;
 
-        // 60-second play clock
+        // play clock
         scoreConfig.fixedWidth = 0;
-        this.clock = this.time.delayedCall(1000, () => {
+        this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 + 64, '(F)ire to Restart', scoreConfig).setOrigin(0.5);
             this.gameOver = true;
