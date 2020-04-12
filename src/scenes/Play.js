@@ -78,9 +78,10 @@ class Play extends Phaser.Scene {
 
     update() {
         // check key input for restart
-        if (this.gameOver && Phaser.Input.Keyboard.JustDown(F)) {
+        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyF)) {
             this.scene.restart(this.p1Score);
         }
+
         // starfield background animation
         this.starfield.tilePositionX -= 4;
 
@@ -133,5 +134,8 @@ class Play extends Phaser.Scene {
         // score increment and repaint
         this.p1Score += ship.points;
         this.scoreLeft.text = this.p1Score;
+        
+        // explosion sfx
+        this.sound.play('sfx_explosion');
     }
 }
