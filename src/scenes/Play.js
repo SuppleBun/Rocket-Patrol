@@ -45,6 +45,31 @@ class Play extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('explosion', {start: 0, end: 9, first: 0}),
             frameRate: 30
         });
+
+        // score
+        this.p1Score = 0;
+
+        // score display
+        let scoreConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#F3B131',
+            color: '#843605',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 100
+        }
+        this.scoreLeft = this.add.text(69, 54, this.p1Score,scoreConfig);
+
+        // 60-second play clock
+        scoreConfig.fixedWidth = 0;
+        this.clock = this.time.delayedCall(6000, () => {
+            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, '(F)ire to Restart', scoreConfig).setOrigin(0.5);
+        }, null, this);
     }
 
     update() {
@@ -95,5 +120,9 @@ class Play extends Phaser.Scene {
             ship.alpha = 1;                     // make the ship visible again
             boom.destroy();                     // remove explosion sprite
         })
+
+        // score increment and repaint
+        this.p1Score += ship.points;
+        this.scoreLeft.text = this.p1Score;
     }
 }
