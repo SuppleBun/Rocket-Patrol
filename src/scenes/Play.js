@@ -10,7 +10,7 @@ class Play extends Phaser.Scene {
         this.load.image('starfield', './assets/starfield.png');
     }
 
-    create () {
+    create() {
         // place tile spritessss
         this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0,0);
 
@@ -25,6 +25,11 @@ class Play extends Phaser.Scene {
 
         // add the rocket
         this.p1Rocket = new Rocket(this, game.config.width/2-8, 431, 'rocket').setScale(0.5, 0.5).setOrigin(0, 0);
+
+        // add the spaceships
+        this.ship01 = new Spaceship(this, game.config.width+192, 132, 'spaceship', 0, 30).setOrigin(0,0);
+        this.ship02 = new Spaceship(this, game.config.width+96, 196, 'spaceship', 0, 20).setOrigin(0,0);
+        this.ship03 = new Spaceship(this, game.config.width, 260, 'spaceship', 0, 10).setOrigin(0,0);
     
         // define keys
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
@@ -32,8 +37,13 @@ class Play extends Phaser.Scene {
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
     }
 
-    update () {
+    update() {
         this.starfield.tilePositionX -= 4;
         this.p1Rocket.update();
+
+        // update spaceships
+        this.ship01.update();
+        this.ship02.update();
+        this.ship03.update();
     }
 }
