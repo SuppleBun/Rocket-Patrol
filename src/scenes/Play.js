@@ -60,9 +60,12 @@ class Play extends Phaser.Scene {
                 top: 5,
                 bottom: 5,
             },
-            fixedWidth: 100
+            fixedWidth: 0
         }
         this.scoreLeft = this.add.text(69, 54, this.p1Score,scoreConfig);
+
+        // displays high score
+        this.add.text(269, 54, "HIGH SCORE: "+highScore,scoreConfig);
 
         // game over flag
         this.gameOver = false;
@@ -70,6 +73,11 @@ class Play extends Phaser.Scene {
         // play clock
         scoreConfig.fixedWidth = 0;
         this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
+            if(this.p1Score > highScore) {
+                highScore = this.p1Score;
+                this.add.text(269, 54, "HIGH SCORE: "+highScore,scoreConfig);
+                console.log("high score is: "+highScore);
+            }
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 + 64, '(F)ire to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true;
