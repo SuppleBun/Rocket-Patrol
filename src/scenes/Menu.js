@@ -31,7 +31,7 @@ class Menu extends Phaser.Scene {
         let textSpacer = 64;
 
         // displays high score
-        this.add.text(269, 54, 'HIGH SCORE: '+highScore, menuConfig);
+        this.add.text(320, 54, 'HIGH SCORE: '+highScore, menuConfig);
 
         this.add.text(centerX, centerY - textSpacer, 'ROCKET PATROL', menuConfig).setOrigin(0.5);
         this.add.text(centerX, centerY, 'Use <- -> arrows to move & (F) to Fire', menuConfig).setOrigin(0.5);

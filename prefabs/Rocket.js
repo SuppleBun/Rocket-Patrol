@@ -1,5 +1,5 @@
 // Rocket prefab
-class Rocket2 extends Phaser.GameObjects.Sprite {
+class Rocket extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, frame) {
         super(scene, x, y, texture, frame);
 
@@ -16,15 +16,15 @@ class Rocket2 extends Phaser.GameObjects.Sprite {
     update() {
         // left/right movement
         if(!this.isFiring) {
-            if(keyA.isDown && this.x >= 47) {
+            if(keyLEFT.isDown && this.x >= 47) {
                 this.x -= 2;
-            } else if(keyD.isDown && this.x <= 578) {
+            } else if(keyRIGHT.isDown && this.x <= 578) {
                 this.x += 2;
             }
         }
 
         // fiya button
-        if(Phaser.Input.Keyboard.JustDown(keyL) && !this.isFiring) {
+        if(Phaser.Input.Keyboard.JustDown(keyF) && !this.isFiring) {
             this.isFiring = true;
             this.sfxRocket.play(); // play the sfx
         }
