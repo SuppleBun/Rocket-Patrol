@@ -106,6 +106,7 @@ class Play extends Phaser.Scene {
             this.scene.start("menuScene");
             p1Score = 0;
             p2Score = 0;
+            player1Play = true;
         }
 
         // starfield background animation
