@@ -47,8 +47,7 @@ class Play extends Phaser.Scene {
         });
 
         // score
-        //this.p1Score = 0;
-        //this.p2Score = 0;
+        this.p1Score = 0;
 
         // score display
         let scoreConfig = {
@@ -63,11 +62,10 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 0
         }
-        this.scoreLeft1 = this.add.text(69, 54, "p1:"+p1Score,scoreConfig);
-        this.scoreLeft2 = this.add.text(200, 54, "p2:"+p2Score,scoreConfig);
+        this.scoreLeft = this.add.text(69, 54, this.p1Score,scoreConfig);
 
         // displays high score
-        this.add.text(320, 54, "HIGH SCORE:"+highScore,scoreConfig);
+        this.add.text(269, 54, "HIGH SCORE: "+highScore,scoreConfig);
 
         // game over flag
         this.gameOver = false;
@@ -75,38 +73,25 @@ class Play extends Phaser.Scene {
         // play clock
         scoreConfig.fixedWidth = 0;
         this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
-            if(p1Score > highScore) {
-                highScore = p1Score;
-                this.add.text(320, 54, "HIGH SCORE:"+highScore,scoreConfig);
-            }
-            
-            if(p2Score > highScore){
-                highScore = p2Score;
-                this.add.text(320, 54, "HIGH SCORE:"+highScore,scoreConfig);
+            if(this.p1Score > highScore) {
+                highScore = this.p1Score;
+                this.add.text(269, 54, "HIGH SCORE: "+highScore,scoreConfig);
+                console.log("high score is: "+highScore);
             }
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 64, '(F)ire to for next player turn', scoreConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + (64*2), '<- for Menu', scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, '(F)ire to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true;
-            if(player1Play) {
-                player1Play = false;
-            } else {
-                player1Play = true;
-            }
         }, null, this);
     }
 
     update() {
         // check key input for restart
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyF)) {
-            this.scene.restart();
+            this.scene.restart(this.p1Score);
         }
 
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
             this.scene.start("menuScene");
-            p1Score = 0;
-            p2Score = 0;
-            player1Play = true;
         }
 
         // starfield background animation
@@ -159,13 +144,8 @@ class Play extends Phaser.Scene {
         })
 
         // score increment and repaint
-        if(player1Play) {
-            p1Score += ship.points;
-            this.scoreLeft1.text = "p1:"+p1Score;
-        } else {
-            p2Score += ship.points;
-            this.scoreLeft2.text = "p2:"+p2Score;
-        }
+        this.p1Score += ship.points;
+        this.scoreLeft.text = this.p1Score;
         
         // explosion sfx
         this.sound.play('sfx_explosion');
