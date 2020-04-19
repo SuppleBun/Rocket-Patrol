@@ -31,12 +31,6 @@ class Rocket extends Phaser.GameObjects.Sprite {
 
         // if fiyad, move up
         if(this.isFiring && this.y >= 108) {
-            // rocket is now controllable while being fiyad
-            if(keyLEFT.isDown && this.x >= 47) {
-                this.x -= 2;
-            } else if(keyRIGHT.isDown && this.x <= 578) {
-                this.x += 2;
-            }
             this.y -= 2;
         }
 
